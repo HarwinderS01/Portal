@@ -1,95 +1,42 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+/*
+ * Student Portal - Main Page
+ * Program Description: This is the main page of the student portal for New Generation High School. It displays a list of students,
+ * allows the administrator to add new students via a form, and includes data validation for form inputs.
+ * Inputs: Student's first name, last name, date of birth, and grade.
+ * Output: Displays the updated student list with new entries added.
+*/
+"use client"; // Ensure client-side rendering is enabled
+
+import { useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import StudentList from '../components/StudentList';
+import StudentForm from '../components/StudentForm';
+import Footer from '../components/Footer';
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [students, setStudents] = useState([]);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
+  // Fetch initial students from students.json
+  useEffect(() => {
+    fetch('/students.json')
+      .then((res) => res.json())
+      .then((data) => setStudents(data))
+      .catch((error) => console.error('Error fetching students:', error));
+  }, []);
+
+  // Function to add a new student to the list
+  const addStudent = (newStudent) => {
+    setStudents((prevStudents) => [...prevStudents, newStudent]);
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <main style={{ padding: '1rem' }}>
+        <StudentForm onAddStudent={addStudent} />
+        <StudentList students={students} />
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 }
