@@ -6,3 +6,5 @@ Managed project structure, initialized GitHub repository, and prepared deploymen
 Implemented state management using React hooks (useState, useEffect) for dynamic data updates.
 Loaded initial student data from students.json and ensured new students are added to the list correctly.
 3. Ryan M. Van Popering - Testing and debugging. Criteria management and documentation.
+4. Jashanpreet Singh – Form Validation and Functionality. Developed the Student Form with input validation (e.g., required fields, date validation).
+Ensured proper handling of new student  entries, including form reset and error alerts.
